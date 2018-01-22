@@ -1,0 +1,34 @@
+<?php if ($this->isInsuranceModuleEnabled()): ?>
+    <?php $insuranceInfo = $this->calculateInsuranceForActiveCarriers(); ?>
+    <?php if (count($insuranceInfo) != 0): ?>
+        <lu class="form-list">
+            <li class="control">
+                <input type="checkbox" name="use_insurance" id="use_insurance" value="enabled" title="Use Insurance" class="checkbox">
+                <label for="insurance">Use Insurance</label>
+            </li>
+        </lu>
+        <table class="data-table linearize-table checkout-review-table">
+            <thead>
+            <tr class="first last">
+                <th >Shipping method</th>
+                <th class="a-right">Insurance Cost</th>
+                <th class="a-right">Cost Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($insuranceInfo as $insuranceItem): ?>
+                <tr>
+                    <td>
+                        <h3 class="product-name"><?php echo $insuranceItem->getShippingMethodTitle(); ?></h3>
+                    </td>
+                    <td class="a-right">
+                        <span class="price"><?php echo $insuranceItem->getInsuranceCost(); ?></span>
+                    </td>
+                    <td class="a-right"><?php echo $insuranceItem->getInsuranceTypeLabel(); ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+<?php endif; ?>
+
