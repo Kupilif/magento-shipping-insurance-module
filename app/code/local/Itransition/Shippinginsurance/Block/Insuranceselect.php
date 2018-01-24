@@ -2,7 +2,6 @@
 
 class Itransition_Shippinginsurance_Block_InsuranceSelect extends Mage_Checkout_Block_Onepage_Abstract
 {
-
     public function isInsuranceModuleEnabled()
     {
         return Mage::helper('shippinginsurance')->isInsuranceModuleEnabled();

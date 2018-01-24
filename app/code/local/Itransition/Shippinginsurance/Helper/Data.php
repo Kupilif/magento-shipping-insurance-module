@@ -21,8 +21,12 @@ class Itransition_Shippinginsurance_Helper_Data extends Mage_Core_Helper_Abstrac
 
     public function isInsuranceEnabledForShippingMethod($shippingCode)
     {
-        $value = Mage::getStoreConfig(self::CONFIGURATION_SECTION .
-            $shippingCode . self::INSURANCE_ENABLED_FOR_SHIPPING_METHOD_FIELD);
+        $value = Mage::getStoreConfig(
+            self::CONFIGURATION_SECTION
+            . $shippingCode
+            . self::INSURANCE_ENABLED_FOR_SHIPPING_METHOD_FIELD
+        );
+
         return $value === self::ENABLED;
     }
 
@@ -45,28 +49,28 @@ class Itransition_Shippinginsurance_Helper_Data extends Mage_Core_Helper_Abstrac
 
     public function calculateInsurance($shippingCode, $subtotal)
     {
-        $result = new Itransition_Shippinginsurance_Model_InsuranceInfo();
         $insuranceTypeModel = Mage::getModel('shippinginsurance/source_insurancetype');
         $insuranceValue = $this->getInsuranceValueForShippingMethod($shippingCode);
         $insuranceType = $this->getInsuranceTypeForShippingMethod($shippingCode);
 
         switch ($insuranceType) {
             case $insuranceTypeModel::FIXED_VALUE_TYPE:
-                $result->setInsuranceCost((double)$insuranceValue);
-                $result->setInsuranceTypeLabel(self::FIXED_COST_LABEL);
+                $insuranceCost = (double)$insuranceValue;
+                $insuranceTypeLabel = self::FIXED_COST_LABEL;
                 break;
             case $insuranceTypeModel::PERCENT_VALUE_TYPE:
-                $result->setInsuranceCost(
-                    $subtotal * $insuranceValue / self::_100_PERCENTS
-                );
-                $result->setInsuranceTypeLabel(
-                    $insuranceValue . self::PERCENT_FROM_COST_LABEL
-                );
+                $insuranceCost =    $subtotal * $insuranceValue / self::_100_PERCENTS;
+                $insuranceTypeLabel = $insuranceValue . self::PERCENT_FROM_COST_LABEL;
                 break;
         }
 
-        $result->setInsuranceType($insuranceType);
-        $result->setShippingMethodTitle($this->getShippingMethodTitle($shippingCode));
+        $result = new Itransition_Shippinginsurance_Model_InsuranceInfo(
+            $insuranceCost,
+            $insuranceType,
+            $insuranceTypeLabel,
+            $this->getShippingMethodTitle($shippingCode)
+        );
+
         return $result;
     }
 
@@ -97,7 +101,7 @@ class Itransition_Shippinginsurance_Helper_Data extends Mage_Core_Helper_Abstrac
 
     public function isNecessaryToAddInsuranceToGrandTotal($insuranceCost)
     {
-        return ($insuranceCost !== null);
+        return $insuranceCost !== null;
     }
 
     public function getCorrectShippingMethodCode($shippingMethod)

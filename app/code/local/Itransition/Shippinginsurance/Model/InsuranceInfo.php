@@ -7,11 +7,12 @@ class Itransition_Shippinginsurance_Model_InsuranceInfo
     private $insuranceType;
     private $insuranceCost;
 
-    public function __construct()
+    public function __construct($cost, $type, $label, $shippingMethodTitle)
     {
-        $this->shippingMethodTitle = '';
-        $this->insuranceType = '';
-        $this->insuranceCost = 0;
+        $this->insuranceCost = $cost;
+        $this->insuranceType = $type;
+        $this->insuranceTypeLabel = $label;
+        $this->shippingMethodTitle = $shippingMethodTitle;
     }
 
     public function getShippingMethodTitle()
@@ -32,25 +33,5 @@ class Itransition_Shippinginsurance_Model_InsuranceInfo
     public function getInsuranceCost()
     {
         return $this->insuranceCost;
-    }
-
-    public function setShippingMethodTitle($shippingMethodTitle)
-    {
-        $this->shippingMethodTitle = $shippingMethodTitle;
-    }
-
-    public function setInsuranceType($insuranceType)
-    {
-        $this->insuranceType = $insuranceType;
-    }
-
-    public function setInsuranceTypeLabel($insuranceTypeLabel)
-    {
-        $this->insuranceTypeLabel = $insuranceTypeLabel;
-    }
-
-    public function setInsuranceCost($insuranceCost)
-    {
-        $this->insuranceCost = $insuranceCost;
     }
 }
