@@ -1,0 +1,11 @@
+<layout>
+    <checkout_onepage_index>
+        <reference name="checkout.onepage.shipping_method">
+            <block
+                name="additional"
+                type="shippinginsurance/insuranceselect"
+                template="shippinginsurance/insurance_select.phtml"
+            />
+        </reference>
+    </checkout_onepage_index>
+</layout>

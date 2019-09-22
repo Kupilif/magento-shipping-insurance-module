@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Itransition_Shippinginsurance>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Itransition_Shippinginsurance>
+    </modules>
+</config>
